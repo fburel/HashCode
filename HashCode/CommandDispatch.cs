@@ -17,7 +17,6 @@ namespace HashCode
 		List<Order> bigDeliery = new List<Order>();
 
 
-
 		List<Command> Result;
 
 
@@ -39,27 +38,42 @@ namespace HashCode
 		}
 
 
-		void Resolve()
+		public void Resolve()
 		{
-
-			// 1st step :
-			splitDelivery();
-
-
-			// 2nd step
-
-
-
-			foreach (var drone in _problem.Drones)
-			{
-
-			}
+			
 
 		}
 
 
+		int CalculateWeight(WareHouse h, Order order)
+		{
+			// int
+			int distance = (int) Math.Ceiling(h.Position.Distance(order.Destination));
 
 
+			int nbProdManque = 0;
+
+			foreach (var orderItem in order.Products)
+			{
+				var numberOfAvailableItem = h.Products [orderItem.Key];
+
+				var remainingItems = numberOfAvailableItem - orderItem.Value;
+
+				if(remainingItems < 0)
+				{
+					nbProdManque += -1 * remainingItems;
+				}
+
+			}
+
+			return distance + nbProdManque;
+		}
+
+
+		int Affect(Order o, WareHouse h)
+		{
+			
+		}
 
 	}
 }

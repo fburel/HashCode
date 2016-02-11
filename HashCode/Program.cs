@@ -69,7 +69,7 @@ namespace HashCode
 			set;
 		}
 
-		Cell Position { get ; set ; }
+		public Cell Position { get ; set ; }
 		public int Idx {
 			get;
 			set;
@@ -154,7 +154,7 @@ namespace HashCode
 			get;
 			set;
 		}
-		Cell Destination { get ; set ; }
+		public Cell Destination { get ; set ; }
 
 	}
 
