@@ -12,38 +12,23 @@ namespace HashCode
 			_problem = pb;
 		}
 
-		List<Order> quickdeliveries =new List<Order>();
-
-		List<Order> bigDeliery = new List<Order>();
-
-
-		List<Command> Result;
-
-
-
-		void splitDelivery()
+		public void DispatchOrders()
 		{
-			
 			foreach (var order in _problem.Orders)
 			{
-				if(order.Products.Count == 1)
-				{
-					quickdeliveries.Add(order);
-				}
-				else if(order.Products.Count > 1)
-				{
-					bigDeliery.Add(order);
-				}
+
+				var warehouse = RetrieveBestWareHouse(_problem.WareHouses, order);
+
+				Affect(order, warehouse);
+
 			}
 		}
 
 
-		public void Resolve()
+		WareHouse RetrieveBestWareHouse(List<WareHouse> warehouses, Order order)
 		{
-			
-
+			return null;
 		}
-
 
 		int CalculateWeight(WareHouse h, Order order)
 		{
@@ -52,6 +37,7 @@ namespace HashCode
 
 
 			int nbProdManque = 0;
+			int nbTotalProduit = 0;
 
 			foreach (var orderItem in order.Products)
 			{
@@ -59,17 +45,19 @@ namespace HashCode
 
 				var remainingItems = numberOfAvailableItem - orderItem.Value;
 
+				nbTotalProduit += orderItem.Value;
+
 				if(remainingItems < 0)
 				{
 					nbProdManque += -1 * remainingItems;
 				}
 
 			}
+				
 
 			return distance + nbProdManque;
 		}
-
-
+			
 		int Affect(Order o, WareHouse h)
 		{
 			return 0;
