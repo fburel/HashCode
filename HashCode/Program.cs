@@ -143,7 +143,7 @@ namespace HashCode
 		}
 
 		public int UnloadProduct(ProductType p, int qty) {
-			if (!Products.ContainsKey [p])
+			if (!Products.ContainsKey (p))
 				return 0;
 
 			int maxQty = Math.Min (Products [p], qty);
@@ -281,13 +281,15 @@ namespace HashCode
 		public bool UnloadProduct(ProductType pt, int quantity) {
 			if (Products.ContainsKey (pt) && Products[pt] >= quantity) {
 				Products [pt] -= quantity;
+				return true;
 			} else {
 				throw new Exception ("NO PRODUCT IN DRONE");
 			}
+			return false;
 		}
 
 		public void MoveTo(Cell c) {
-			TotalTurn += Math.Ceiling (Position.Distance (c));
+			TotalTurn += (int)Math.Ceiling (Position.Distance (c));
 			Position = c;
 		}
 	}
