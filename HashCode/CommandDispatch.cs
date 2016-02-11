@@ -39,7 +39,7 @@ namespace HashCode
 		}
 
 
-		void Resolve()
+		public void Resolve()
 		{
 
 			// 1st step :

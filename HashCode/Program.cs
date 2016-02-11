@@ -10,26 +10,14 @@ namespace HashCode
 	{
 		public static void Main (string[] args)
 		{
-			Problem pb = new Problem ();
-			string line = "";
-			int counter = 0;
-			StreamReader file = new StreamReader("/Users/JulienCroain/Downloads/busy_day.in");
+			List<string> files = new List<string> ();
+			files.Add ("/Users/JulienCroain/Downloads/busy_day.in");
+			files.Add ("/Users/JulienCroain/Downloads/mother_of_all_warehouses.in");
+			files.Add ("/Users/JulienCroain/Downloads/redundancy.in");
 
-			while((line = file.ReadLine()) != null)
-			{
-				Console.WriteLine (line);
-				if (counter == 0) {
-					pb = new Problem (line);
-				}
-				counter++;
+			foreach (var file in files) {
+				Problem.ResolveProblem (file);
 			}
-
-			file.Close();
-
-			// Suspend the screen.
-			Console.ReadLine();
-			Console.WriteLine ("Hello World!");
-
 		}
 	}
 
@@ -40,6 +28,63 @@ namespace HashCode
 		public List<ProductType> Products;
 		public List<Order> Orders;
 		public List<Drone> Drones;
+
+		public static void ResolveProblem(string filepath) {
+
+			Problem pb = new Problem ();
+			string line = "";
+			int counter = 0;
+			int nbWarehouse = 0;
+			int currentWarehouse = 0;
+			int nbOrder = 0;
+			int currentOrder = 0;
+			StreamReader file = new StreamReader(filepath);
+
+			while((line = file.ReadLine()) != null)
+			{
+				//Console.WriteLine (line);
+				if (counter == 0) {
+					pb = new Problem (line);
+				} else if (counter == 1) {
+				} else if (counter == 2) {
+					List<string> datas = line.Split (' ').ToList ();
+					for (int i = 0; i < datas.Count; i++) {
+						pb.Products.Add (new ProductType (i, int.Parse (datas [i])));
+					}
+				} else if (counter == 3) {
+					nbWarehouse = int.Parse (line);
+				} else if (counter <= 3 + (nbWarehouse * 2)) {
+					List<string> datas = new List<string> ();
+					datas.Add (line);
+					datas.Add (file.ReadLine());
+					counter++;
+					pb.WareHouses.Add (new WareHouse (currentWarehouse, datas, pb));
+				} else if (counter == 3 + (nbWarehouse * 2) + 1) {
+					nbOrder = int.Parse (line);
+				} else {
+					List<string> datas = new List<string> ();
+					datas.Add (line);
+					datas.Add (file.ReadLine());
+					counter++;
+					datas.Add (file.ReadLine());
+					counter++;
+					pb.Orders.Add(new Order(datas, pb));
+				}
+				counter++;
+			}
+
+			file.Close();
+
+			Console.WriteLine (pb.ToString ());
+
+			// Suspend the screen.
+			Console.ReadLine();
+			Console.WriteLine ("Hello World!");
+
+			CommandDispatch cd = new CommandDispatch (pb);
+			cd.Resolve ();
+			
+		}
 
 		public Problem() {
 			Turn = 0;
@@ -61,6 +106,12 @@ namespace HashCode
 				Drones.Add (new Drone (maxPayLoad));
 			}
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[Problem] [WareHouses:{0}] [Map:{1}:{2}] [Turn:{3}] [Products:{4}] [Orders:{5}] [Drones:{6}]",
+				WareHouses.Count, Map.Row, Map.Column, Turn, Products.Count, Orders.Count, Drones.Count);
+		}
 	}
 
 	public class WareHouse {
@@ -81,7 +132,7 @@ namespace HashCode
 			Idx = 0;
 		}
 
-		public WareHouse (int idx, List<string> datas, Problem pb) {
+		public WareHouse (int idx, List<string> datas, Problem pb) : this() {
 			Position = new Cell (datas [0]);
 			Idx = idx;
 
@@ -100,6 +151,11 @@ namespace HashCode
 		public int Weight {
 			get;
 			set;
+		}
+
+		public ProductType(int idx, int w) {
+			Idx = idx;
+			Weight = w;
 		}
 	}
 
@@ -150,12 +206,23 @@ namespace HashCode
 	}
 
 	public class Order{
-		public Dictionary<ProductType,int> Products {
-			get;
-			set;
-		}
+		public Dictionary<ProductType,int> Products { get; set; }
 		Cell Destination { get ; set ; }
 
+		public Order() {
+			Products = new Dictionary<ProductType, int> ();
+		}
+
+		public Order(List<string> datas, Problem pb) : this() {
+			Destination = new Cell (datas [0]);
+			string[] products = datas [2].Split (' ');
+			for (int i = 0; i < products.Length; i++) {
+				int qty = int.Parse (products [i]);
+				if (qty > 0) {
+					Products.Add (pb.Products [i], qty);
+				}
+			}
+		}
 	}
 
 	public class Drone {
