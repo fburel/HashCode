@@ -72,7 +72,7 @@ namespace HashCode
 
 		int Affect(Order o, WareHouse h)
 		{
-			
+			return 0;
 		}
 
 	}
