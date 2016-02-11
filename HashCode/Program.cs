@@ -141,6 +141,18 @@ namespace HashCode
 				Products.Add (pb.Products [i], int.Parse(data [i]));
 			}
 		}
+
+		public int UnloadProduct(ProductType p, int qty) {
+			if (!Products.ContainsKey [p])
+				return 0;
+
+			int maxQty = Math.Min (Products [p], qty);
+			Products [p] -= maxQty;
+			if (Products [p] == 0)
+				Products.Remove (p);
+
+			return maxQty;
+		}
 	}
 
 	public class ProductType {
@@ -206,13 +218,8 @@ namespace HashCode
 	}
 
 	public class Order{
-
-		public Dictionary<ProductType,int> Products {
-			get;
-			set;
-		}
+		public Dictionary<ProductType,int> Products { get; set; }
 		public Cell Destination { get ; set ; }
-
 
 		public Order() {
 			Products = new Dictionary<ProductType, int> ();
@@ -233,19 +240,55 @@ namespace HashCode
 	public class Drone {
 		public int MaxWeight { get; set; }
 		public Cell Position { get; set; }
-		public List<ProductType> Products;
+		public Dictionary<ProductType,int> Products { get; set; }
+		public int TotalTurn;
 
-		public Drone(int max) {
+		public Drone() {
+			Products = new Dictionary<ProductType, int> ();
+			Position = new Cell ();
+		}
+
+		public Drone(int max) : this() {
 			Position = new Cell ();
 			MaxWeight = max;
 		}
 
-		public void LoadProduct(ProductType pt, int quantity) {
+		public int Weight {
+			get {
+				int w = 0;
+				foreach (var item in Products) {
+					w += item.Key.Weight * item.Value;
+				}
+				return w;
+			}
+		}
+
+		public int CanLoadProduct(ProductType pt, int quantity) {
+			return Math.Min(MaxWeight, Weight + (pt.Weight * quantity));
+		}
+
+		public int LoadProduct(ProductType pt, int quantity) {
+			int q = CanLoadProduct(pt, quantity);
+			
+			if (Products.ContainsKey (pt)) {
+				Products [pt] += q;
+			} else {
+				Products.Add (pt, q);
+			}
+			return q;
+		}
+
+		public bool UnloadProduct(ProductType pt, int quantity) {
+			if (Products.ContainsKey (pt) && Products[pt] >= quantity) {
+				Products [pt] -= quantity;
+			} else {
+				throw new Exception ("NO PRODUCT IN DRONE");
+			}
 		}
 
 		public void MoveTo(Cell c) {
+			TotalTurn += Math.Ceiling (Position.Distance (c));
+			Position = c;
 		}
-
-
 	}
 }

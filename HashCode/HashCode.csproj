@@ -37,6 +37,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandDispatch.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="CommandExecute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
