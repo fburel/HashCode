@@ -12,7 +12,17 @@ namespace HashCode
 		}
 
 		public Drone FindOptimistDrone(WareHouse wh) {
-			return Problem.Drones.FirstOrDefault ();
+			int min = int.MaxValue;
+			Drone result = null;
+
+			foreach (var d in Problem.Drones) {
+				if (min > wh.Position.Distance (d.Position) + d.TotalTurn) {
+					result = d;
+					min = (int)wh.Position.Distance (d.Position) + d.TotalTurn;
+				}
+			}
+
+			return result;
 		}
 
 		public void DispacthOrder(WareHouse wh, Order o) {
