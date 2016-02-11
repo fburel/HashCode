@@ -82,7 +82,8 @@ namespace HashCode
 			Console.WriteLine ("Hello World!");
 
 			CommandDispatch cd = new CommandDispatch (pb);
-			cd.DispatchOrders ();
+
+			var dispatchResult = cd.DispatchOrders ();
 			
 		}
 
