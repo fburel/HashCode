@@ -4,8 +4,9 @@ using System.Linq;
 
 namespace HashCode
 {
-
-
+	/// <summary>
+	/// A class that helps dispatching a set of orders through different warehouses
+	/// </summary>
 	public class CommandDispatch
 	{
 
@@ -15,15 +16,16 @@ namespace HashCode
 
 		Dictionary<WareHouse, List<Order>> DispatchResults = new Dictionary<WareHouse, List<Order>>();
 
-		public CommandDispatch(Problem pb)
+
+		public CommandDispatch(IEnumerable<Order> orders, IEnumerable<WareHouse> warehouses)
 		{
 			// Reorganize the order by cell in deliveries
-			foreach (var order in pb.Orders)
+			foreach (var order in orders)
 			{
 				AppendOrder(order);
 			}
 
-			foreach (var warehouse in pb.WareHouses)
+			foreach (var warehouse in warehouses)
 			{
 				Dictionary<ProductType, int> inventory = new Dictionary<ProductType, int>();
 
@@ -155,10 +157,7 @@ namespace HashCode
 			var detail = new Dictionary<ProductType, int>();
 			detail.Add(type, qtt);
 
-			Order order = new Order() {
-				Destination = cell,
-				Products = detail
-			};
+			Order order = new Order(detail, cell);
 
 			Affect(order, warehouse);
 

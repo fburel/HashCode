@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,9 +35,32 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommandDispatch.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="CommandExecute.cs" />
+    <Compile Include="Services\ConsoleLogger.cs" />
+    <Compile Include="Services\HashCodeFileManager.cs" />
+    <Compile Include="Services\ProblemFactory.cs" />
+    <Compile Include="BuisnessObjects\Drone.cs" />
+    <Compile Include="BuisnessObjects\Cell.cs" />
+    <Compile Include="BuisnessObjects\Map.cs" />
+    <Compile Include="BuisnessObjects\Order.cs" />
+    <Compile Include="BuisnessObjects\Problem.cs" />
+    <Compile Include="BuisnessObjects\ProductType.cs" />
+    <Compile Include="BuisnessObjects\WareHouse.cs" />
+    <Compile Include="BuisnessAlgorythms\CommandDispatch.cs" />
+    <Compile Include="BuisnessAlgorythms\CommandExecute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="BuisnessObjects\" />
+    <Folder Include="BuisnessAlgorythms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Materials\busy_day.in" />
+    <EmbeddedResource Include="Materials\mother_of_all_warehouses.in" />
+    <EmbeddedResource Include="Materials\redundancy.in" />
+    <EmbeddedResource Include="Materials\quiet_day_at_the_office.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Materials\delivery.pdf" />
+  </ItemGroup>
 </Project>
