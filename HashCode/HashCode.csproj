@@ -60,7 +60,4 @@
     <EmbeddedResource Include="Materials\redundancy.in" />
     <EmbeddedResource Include="Materials\quiet_day_at_the_office.in" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Materials\delivery.pdf" />
-  </ItemGroup>
 </Project>
