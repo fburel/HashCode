@@ -8,9 +8,9 @@ namespace HashCode
     internal class ConsoleLogger
     {
 		/// <summary>
-		/// Print the given text
-		/// </summary>
-		/// <param name="results">Results.</param>
+        /// Print the given text
+        /// </summary>
+        /// <param name="text">the text</param>
 		public void Write(string text)
 		{
 			Console.Write(text);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace HashCode
@@ -9,12 +8,11 @@ namespace HashCode
 	/// </summary>
 	public class CommandDispatch
 	{
+	    readonly Dictionary<Cell, Dictionary<ProductType, int>> Deliveries = new Dictionary<Cell, Dictionary<ProductType, int>>();
 
-		Dictionary<Cell, Dictionary<ProductType, int>> Deliveries = new Dictionary<Cell, Dictionary<ProductType, int>>();
+		readonly Dictionary<WareHouse, Dictionary<ProductType, int>> Inventories = new Dictionary<WareHouse, Dictionary<ProductType, int>>();
 
-		Dictionary<WareHouse, Dictionary<ProductType, int>> Inventories = new Dictionary<WareHouse, Dictionary<ProductType, int>>();
-
-		Dictionary<WareHouse, List<Order>> DispatchResults = new Dictionary<WareHouse, List<Order>>();
+		readonly Dictionary<WareHouse, List<Order>> DispatchResults = new Dictionary<WareHouse, List<Order>>();
 
 
 		public CommandDispatch(IEnumerable<Order> orders, IEnumerable<WareHouse> warehouses)

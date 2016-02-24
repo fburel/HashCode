@@ -11,9 +11,9 @@ namespace HashCode
 	{
 
         // Services
-        static HashCodeFileManager _fileManager        = new HashCodeFileManager();
-        static ProblemFactory _problemFactory          = new ProblemFactory();
-        static ConsoleLogger _logger                   = new ConsoleLogger();
+        readonly static HashCodeFileManager _fileManager        = new HashCodeFileManager();
+        readonly static ProblemFactory _problemFactory          = new ProblemFactory();
+        readonly static ConsoleLogger _logger                   = new ConsoleLogger();
 
         public static void Main (string[] args)
 		{

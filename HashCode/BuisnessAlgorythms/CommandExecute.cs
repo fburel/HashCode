@@ -30,7 +30,6 @@ namespace HashCode
 				int q = wh.UnloadProduct(p.Key, p.Value);
 				o.Products[p.Key] -= q;
 
-				int load = 0;
 				while (q > 0) {
 					Drone d = FindOptimistDrone (wh);
 					d.MoveTo (wh.Position);

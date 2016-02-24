@@ -32,8 +32,6 @@ namespace HashCode
 			int lineCount = 0;
 			int nbWarehouse = 0;
 			int currentWarehouse = 0;
-			int nbOrder = 0;
-			int currentOrder = 0;
 
 
 
@@ -119,8 +117,8 @@ namespace HashCode
 
 
 					else if (lineCount == 3 + (nbWarehouse * 2) + 1) {
-						nbOrder = int.Parse (line);
-					} 
+
+                    } 
 
 
 					else {

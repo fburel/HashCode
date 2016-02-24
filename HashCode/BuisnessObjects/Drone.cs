@@ -48,7 +48,6 @@ namespace HashCode
 			} else {
 				throw new Exception ("NO PRODUCT IN DRONE");
 			}
-			return false;
 		}
 
 		public void MoveTo(Cell c) {
